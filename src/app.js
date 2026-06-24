@@ -6,59 +6,129 @@ const rateLimit = require('express-rate-limit');
 
 const authRoutes = require('./routes/auth.routes');
 
+
 function createApp() {
+
   const app = express();
 
-  // Security headers
-  app.use(helmet());
 
-  // CORS
+  // Security
   app.use(
-    cors({
-      origin: process.env.CORS_ORIGIN || '*',
-      credentials: true,
+    helmet({
+      crossOriginResourcePolicy:false
     })
   );
 
-  // Logging
-  app.use(morgan('dev'));
 
-  // Body parsing
-  app.use(express.json({ limit: '1mb' }));
+  // FIXED CORS
+  app.use(
+  cors({
+    origin: [
+      "http://localhost:5173",
+      "http://127.0.0.1:5173",
+      "http://127.0.0.1:5500",
+      "http://localhost:5500",
+      "http://127.0.0.1:8080",
+      "http://localhost:8080"
+    ],
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: true
+  })
+);
 
-  // Rate limiting
+
+
+  // JSON
+  app.use(
+    express.json()
+  );
+
+
+
+  // logger
+  app.use(
+    morgan('dev')
+  );
+
+
+
+  // limit
   app.use(
     rateLimit({
-      windowMs: 15 * 60 * 1000,
-      limit: 200,
-      standardHeaders: true,
-      legacyHeaders: false,
+      windowMs:15*60*1000,
+      limit:200,
+      standardHeaders:true,
+      legacyHeaders:false
     })
   );
 
-  // Routes
-  app.use('/api/auth', authRoutes);
 
-  // Health check
-  app.get('/health', (req, res) => {
-    res.json({ ok: true });
+
+  // routes
+  app.use(
+    "/api/auth",
+    authRoutes
+  );
+
+
+
+  // test route
+  app.get("/",(req,res)=>{
+
+    res.json({
+      message:"Backend is running"
+    });
+
   });
+
+
+
+  app.get("/health",(req,res)=>{
+
+    res.json({
+      ok:true
+    });
+
+  });
+
+
+
 
   // 404
-  app.use((req, res) => {
-    res.status(404).json({ message: 'Not found' });
+  app.use((req,res)=>{
+
+    res.status(404).json({
+      message:"Not found"
+    });
+
   });
 
-  // Error handler
-  // eslint-disable-next-line no-unused-vars
-  app.use((err, req, res, next) => {
-    // eslint-disable-line
-    const status = err.statusCode || 500;
-    res.status(status).json({ message: err.message || 'Internal server error' });
-  });
+
+
+  // errors
+  app.use(
+    (err,req,res,next)=>{
+
+      console.error(err);
+
+      res.status(500).json({
+
+        message:
+        err.message || "Server error"
+
+      });
+
+    }
+  );
+
+
 
   return app;
+
 }
 
-module.exports = { createApp };
 
+module.exports={
+createApp
+};
