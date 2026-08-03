@@ -23,9 +23,180 @@ font-family:Inter,Arial,sans-serif;
 
 .home-page.light{
 
-background:#f8fafc;
-color:#111827;
+background:
+radial-gradient(circle at top right,#bae6fd60,transparent 45%),
+radial-gradient(circle at bottom left,#ddd6fe55,transparent 40%),
+#f4f7fd;
 
+color:#0f172a;
+
+}
+
+.home-page.light .navbar{
+border-bottom:1px solid #e2e8f0;
+}
+
+.home-page.light .logo{
+filter:drop-shadow(0 0 16px #38bdf870);
+}
+
+.home-page.light .brand p{
+color:#0891b2;
+}
+
+.home-page.light .notification{
+background:#ffffff;
+border:1px solid #e2e8f0;
+box-shadow:0 6px 20px rgba(15,23,42,.08);
+color:#d97706;
+}
+
+.home-page.light .notification-panel{
+background:#ffffff;
+border:1px solid #e2e8f0;
+box-shadow:0 20px 60px rgba(15,23,42,.14);
+color:#0f172a;
+}
+
+.home-page.light .notification-header{
+border-bottom:1px solid #e2e8f0;
+}
+
+.home-page.light .notification-header span{
+color:#0891b2;
+}
+
+.home-page.light .notification-empty h3{
+color:#0f172a;
+}
+
+.home-page.light .notification-empty p{
+color:#64748b;
+}
+
+.home-page.light .student{
+background:#ffffff;
+border:1px solid #e2e8f0;
+color:#0f172a;
+box-shadow:0 6px 20px rgba(15,23,42,.08);
+}
+
+.home-page.light .student span{
+color:#2563eb;
+}
+
+.home-page.light .profile-box{
+background:#ffffff;
+border:1px solid #e2e8f0;
+box-shadow:0 20px 60px rgba(15,23,42,.14);
+color:#0f172a;
+}
+
+.home-page.light .profile-top h4{
+color:#2563eb;
+}
+
+.home-page.light .profile-top p{
+color:#64748b;
+}
+
+.home-page.light .divider{
+background:#e2e8f0;
+}
+
+.home-page.light .option-left span{
+color:#0f172a;
+}
+
+.home-page.light .option-icon{
+background:#eff6ff;
+}
+
+.home-page.light .toggle{
+background:#cbd5e1;
+}
+
+.home-page.light .toggle.active{
+background:#6366f1;
+}
+
+.home-page.light .logout-btn{
+background:#fee2e2;
+color:#dc2626;
+}
+
+.home-page.light .welcome p{
+color:#475569;
+}
+
+.home-page.light .feature-card{
+background:#ffffff;
+border:2px solid #e2e8f0;
+box-shadow:0 12px 34px rgba(15,23,42,.07);
+}
+
+.home-page.light .feature-card h2{
+color:#0f172a;
+}
+
+.home-page.light .feature-card p{
+color:#64748b;
+}
+
+.home-page.light .card-footer span{
+background:#f1f5f9;
+color:#0891b2;
+}
+
+.home-page.light .card-footer button{
+background:#f1f5f9;
+color:#0f172a;
+}
+
+/* Words of Wisdom card (nested component) */
+.home-page.light .wow-wrapper{
+background:linear-gradient(135deg,#ffffff 0%,#f0f9ff 55%,#eef2ff 100%);
+border-color:rgba(8,145,178,.22);
+box-shadow:0 0 40px rgba(34,211,238,.08);
+}
+
+.home-page.light .wow-kicker{
+color:#0891b2;
+}
+
+.home-page.light .wow-quote{
+color:#0f172a;
+}
+
+.home-page.light .wow-author-name{
+color:#0f172a;
+}
+
+.home-page.light .wow-author-title{
+color:#64748b;
+}
+
+.home-page.light .wow-author-line{
+background:#94a3b8;
+}
+
+.home-page.light .wow-dot{
+background:#cbd5e1;
+}
+
+.home-page.light .wow-dot.active{
+background:#0891b2;
+}
+
+.home-page.light .wow-nav-btn{
+background:#f1f5f9;
+border:1px solid #e2e8f0;
+color:#0f172a;
+}
+
+.home-page.light .wow-nav-btn:hover{
+background:#e0f2fe;
+border-color:#0891b2;
 }
 
 
@@ -41,7 +212,7 @@ color:#111827;
 
 height:110px;
 
-padding:0 60px;
+padding:0 20px;
 
 display:flex;
 
@@ -61,7 +232,7 @@ display:flex;
 
 align-items:center;
 
-gap:20px;
+gap:17px;
 
 }
 
@@ -69,27 +240,13 @@ gap:20px;
 
 .logo{
 
-width:70px;
+width:170px;
 
-height:70px;
+height:auto;
 
-border-radius:25px;
+display:block;
 
-display:flex;
-
-align-items:center;
-
-justify-content:center;
-
-font-size:40px;
-
-font-weight:900;
-
-background:
-linear-gradient(135deg,#22d3ee,#4f46e5);
-
-box-shadow:
-0 0 40px #2563eb;
+filter:drop-shadow(0 0 22px #2563eb88);
 
 }
 
@@ -385,7 +542,7 @@ justify-content:center;
 
 
 background:
-linear-gradient(135deg,#8b5cf6,#4f46e5);
+linear-gradient(135deg,#60a5fa,#2563eb);
 
 
 font-size:22px;
@@ -404,7 +561,7 @@ margin:0;
 
 .student span{
 
-color:#c084fc;
+color:#93c5fd;
 
 font-size:14px;
 
@@ -489,7 +646,7 @@ font-weight:bold;
 
 
 background:
-linear-gradient(135deg,#9333ea,#4f46e5);
+linear-gradient(135deg,#60a5fa,#2563eb);
 
 
 position:relative;
@@ -540,7 +697,7 @@ margin-top:15px;
 
 .profile-top h4{
 
-color:#c084fc;
+color:#93c5fd;
 
 letter-spacing:2px;
 
@@ -741,9 +898,56 @@ padding:80px;
 
 
 
+@keyframes fadeSlideUp{
+
+from{
+  opacity:0;
+  transform:translateY(20px);
+}
+
+to{
+  opacity:1;
+  transform:translateY(0);
+}
+
+}
+
+
+
+.welcome{
+
+animation:fadeSlideUp .6s ease both;
+
+}
+
+
+
+.wow-wrapper{
+
+animation:fadeSlideUp .6s ease .12s both;
+
+}
+
+
+
 .emoji{
 
 font-size:48px;
+display:inline-block;
+animation:wave 2.2s ease-in-out infinite;
+transform-origin:70% 70%;
+
+}
+
+
+
+@keyframes wave{
+
+0%,60%,100%{ transform:rotate(0deg); }
+10%{ transform:rotate(14deg); }
+20%{ transform:rotate(-8deg); }
+30%{ transform:rotate(14deg); }
+40%{ transform:rotate(-4deg); }
 
 }
 
@@ -835,9 +1039,18 @@ display:flex;
 flex-direction:column;
 
 
-transition:.3s;
+transition:transform .3s ease, box-shadow .3s ease;
+
+animation:fadeSlideUp .5s ease both;
 
 }
+
+
+
+.features .feature-card:nth-child(1){ animation-delay:.18s; }
+.features .feature-card:nth-child(2){ animation-delay:.28s; }
+.features .feature-card:nth-child(3){ animation-delay:.38s; }
+.features .feature-card:nth-child(4){ animation-delay:.48s; }
 
 
 
@@ -847,6 +1060,12 @@ transform:translateY(-8px);
 
 }
 
+
+
+.blue.feature-card:hover{ box-shadow:0 18px 44px rgba(96,165,250,.35); }
+.red.feature-card:hover{ box-shadow:0 18px 44px rgba(248,113,113,.35); }
+.green.feature-card:hover{ box-shadow:0 18px 44px rgba(74,222,128,.35); }
+.violet.feature-card:hover{ box-shadow:0 18px 44px rgba(167,139,250,.35); }
 
 
 
@@ -868,29 +1087,32 @@ align-items:center;
 justify-content:center;
 
 
+transition:transform .35s cubic-bezier(.34,1.56,.64,1);
+
+
+}
+
+
+
+.feature-card:hover .feature-icon{
+
+transform:scale(1.12) rotate(-6deg);
+
 }
 
 
 
 .blue .feature-icon{
 
-background:#2563eb;
+background:#60a5fa;
 
 }
 
 
 
-.yellow .feature-icon{
+.red .feature-icon{
 
-background:#f59e0b;
-
-}
-
-
-
-.purple .feature-icon{
-
-background:#8b5cf6;
+background:#f87171;
 
 }
 
@@ -898,7 +1120,15 @@ background:#8b5cf6;
 
 .green .feature-icon{
 
-background:#10b981;
+background:#4ade80;
+
+}
+
+
+
+.violet .feature-icon{
+
+background:#a78bfa;
 
 }
 
@@ -970,8 +1200,6 @@ background:#ffffff10;
 color:white;
 
 }
-
-
 
 
 

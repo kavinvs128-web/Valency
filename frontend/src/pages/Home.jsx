@@ -12,22 +12,35 @@ import {
 } from "lucide-react";
 
 import {useState,useEffect} from "react";
+import { useNavigate } from "react-router-dom";
 
 import WordsOfWisdom from "../components/WordsOfWisdom";
+import valencyLogo from "../assets/valency-logo.svg";
 
 import "../styles/home.css";
-import Livebooks from "../pages/Livebooks.jsx"; 
+import Livebooks from "../pages/Livebooks.jsx";
 import Classeleven from "../pages/Classeleven.jsx";
+import ReactionLog from "../pages/ReactionLog.jsx";
+import WeeklyTestPage from "../pages/WeeklyTestPage.jsx";
 function Home(){
 
+const navigate = useNavigate();
 
 const [profileOpen,setProfileOpen] = useState(false);
 
 const [notificationOpen,setNotificationOpen] = useState(false);
 
-const [darkMode,setDarkMode] = useState(true);
+const [darkMode,setDarkMode] = useState(() => {
+
+  const savedTheme = localStorage.getItem("chemIQ_theme");
+
+  return savedTheme ? savedTheme === "dark" : true;
+
+});
 
 const [activePage,setActivePage] = useState("dashboard");
+
+const [surpriseTestKey,setSurpriseTestKey] = useState(0);
 
 const [user,setUser] = useState({
 
@@ -63,13 +76,94 @@ if (!savedUser) return;
 
 },[]);
 
+useEffect(()=>{
+
+localStorage.setItem("chemIQ_theme", darkMode ? "dark" : "light");
+
+},[darkMode]);
+
+useEffect(()=>{
+
+window.history.replaceState({ app: true, level: "home" }, "", window.location.href);
+
+function handlePopState(e) {
+
+  const state = e.state;
+
+  if (!state || state.app !== true) return;
+
+  const level = state.level;
+
+  if (level === "livebooks") {
+    setActivePage("livebooks");
+  } else if (level === "class11" || level === "lesson" || level === "quiz") {
+    setActivePage("class11");
+  } else if (level === "attempts") {
+    setActivePage("attempts");
+  } else if (level === "surprisetest") {
+    setActivePage("surprisetest");
+  } else {
+    setActivePage("dashboard");
+  }
+
+}
+
+window.addEventListener("popstate", handlePopState);
+
+return () => window.removeEventListener("popstate", handlePopState);
+
+},[]);
+
+function goToLivebooks() {
+
+window.history.pushState({ app: true, level: "livebooks" }, "", window.location.href);
+
+setActivePage("livebooks");
+
+}
+
+function goToClass11() {
+
+window.history.pushState({ app: true, level: "class11" }, "", window.location.href);
+
+setActivePage("class11");
+
+}
+
+function goToReactionLog() {
+
+window.history.pushState({ app: true, level: "attempts" }, "", window.location.href);
+
+setActivePage("attempts");
+
+}
+
+function goToSurpriseTest() {
+
+window.history.pushState({ app: true, level: "surprisetest" }, "", window.location.href);
+
+setActivePage("surprisetest");
+
+}
+
+function logout() {
+
+localStorage.removeItem("chemIQ_token");
+
+localStorage.removeItem("user");
+
+navigate("/signin");
+
+}
+
 if (activePage === "livebooks") {
   return (
     <Livebooks
-      onBack={() => setActivePage("dashboard")}
+      darkMode={darkMode}
+      onBack={() => window.history.back()}
       onSelectCategory={(categoryId) => {
         if (categoryId === "class11") {
-          setActivePage("class11");
+          goToClass11();
         }
       }}
     />
@@ -77,7 +171,27 @@ if (activePage === "livebooks") {
 }
 
 if (activePage === "class11") {
-  return <Classeleven onBack={() => setActivePage("livebooks")} />;
+  return <Classeleven darkMode={darkMode} onBack={() => window.history.back()} />;
+}
+
+if (activePage === "attempts") {
+  return (
+    <ReactionLog
+      darkMode={darkMode}
+      onBack={() => window.history.back()}
+      onTakeQuiz={goToSurpriseTest}
+    />
+  );
+}
+
+if (activePage === "surprisetest") {
+  return (
+    <WeeklyTestPage
+      key={surpriseTestKey}
+      darkMode={darkMode}
+      onBack={() => window.history.back()}
+    />
+  );
 }
 
 
@@ -99,20 +213,18 @@ return(
 <div className="brand">
 
 
-<div className="logo">
-C
-</div>
+<img className="logo" src={valencyLogo} alt="Valency" />
 
 
 <div>
 
 <h1>
-ChemIQ
+Valency
 </h1>
 
 
 <p>
-Learn • Explore • Discover
+Learn • Bond • Master
 </p>
 
 
@@ -445,7 +557,7 @@ Help & Contact
 
 
 
-<button className="logout-btn">
+<button className="logout-btn" onClick={logout}>
 
 
 <LogOut size={18}/>
@@ -563,7 +675,8 @@ text="Explore interactive chemistry books with animations & live examples."
 badge="3 Books"
 
 color="blue"
-onClick={() => setActivePage("livebooks")}
+
+onClick={goToLivebooks}
 />
 
 
@@ -574,14 +687,14 @@ onClick={() => setActivePage("livebooks")}
 
 icon={<Zap/>}
 
-title="Surprise Test"
+title="Weekly Test"
 
-text="Get randomly generated quizzes to challenge your chemistry knowledge."
+text="Take this week's chemistry quiz, or practice past topics any time."
 
 badge="Try Now"
 
-color="yellow"
-
+color="red"
+onClick={goToSurpriseTest}
 />
 
 
@@ -598,8 +711,8 @@ text="Track your lessons, deadlines, and upcoming chemistry events."
 
 badge="3 Events"
 
-color="purple"
-
+color="green"
+onClick={() => window.open("https://calendar.google.com/", "_blank", "noopener,noreferrer")}
 />
 
 
@@ -610,14 +723,14 @@ color="purple"
 
 icon={<Trophy/>}
 
-title="Attempts Corner"
+title="Reaction Log"
 
-text="Review your past test attempts, scores, and performance trends."
+text="Review your logged reactions, scores, and performance trends."
 
-badge="12 Attempts"
+badge="0 Reactions"
 
-color="green"
-
+color="violet"
+onClick={goToReactionLog}
 />
 
 
@@ -641,6 +754,57 @@ color="green"
 
 
 
+
+function CountUp({ value, duration = 900 }) {
+
+  const [display, setDisplay] = useState(0);
+
+  useEffect(() => {
+
+    let raf;
+    const startTime = performance.now();
+
+    function tick(now) {
+
+      const progress = Math.min((now - startTime) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+
+      setDisplay(Math.round(eased * value));
+
+      if (progress < 1) {
+        raf = requestAnimationFrame(tick);
+      }
+
+    }
+
+    raf = requestAnimationFrame(tick);
+
+    return () => cancelAnimationFrame(raf);
+
+  }, [value, duration]);
+
+  return display;
+
+}
+
+function BadgeText({ badge }) {
+
+  const match = /^(\d+)(.*)$/.exec(badge);
+
+  if (!match) {
+    return badge;
+  }
+
+  const [, numberPart, rest] = match;
+
+  return (
+    <>
+      <CountUp value={Number(numberPart)} />
+      {rest}
+    </>
+  );
+
+}
 
 function Card({icon,title,text,badge,color,onClick}){
 
@@ -680,7 +844,7 @@ return(
 
 
 <span>
-{badge}
+<BadgeText badge={badge} />
 </span>
 
 
