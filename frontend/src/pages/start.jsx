@@ -6,7 +6,7 @@ import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/start.css";
 import PeriodicBackground from "../components/periodicTable";
-
+import valencyLogo from "../assets/valency-logo.svg";
 export default function Start() {
   const buttonRef = useRef(null);
   const navigate = useNavigate();
@@ -43,16 +43,18 @@ export default function Start() {
             alt="Chemutree chemistry learning logo"
           />
         */}
-        <div className="site-logo-placeholder" aria-hidden="true">⚗️</div>
+        <img
+        className="site-logo-placeholder"
+        src={valencyLogo}
+        alt="Valency" />
 
         <h1 id="pageTitle">Learning about Chemistry</h1>
 
         <p className="tagline">Discover the science inside everything.</p>
 
         <p className="intro">
-          Chemistry is the story of atoms, reactions, colors, energy, and life.
-          Learn each idea step by step, with simple explanations that make
-          difficult topics feel clear.
+          Atoms, reactions, colors, energy — explained simply, one step at a
+          time.
         </p>
 
         <button
@@ -61,7 +63,7 @@ export default function Start() {
           id="startLearning"
           onClick={handleStartClick}
         >
-          <span className="start-button-icon" aria-hidden="true">🚀</span>
+          <span className="start-button-icon" aria-hidden="true"></span>
           Start learning
           <span className="start-button-arrow" aria-hidden="true">→</span>
         </button>

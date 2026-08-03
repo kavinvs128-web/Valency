@@ -7,6 +7,117 @@
   font-family: 'Inter', sans-serif;
 }
 
+/* ── Light mode ── */
+.ce-root.light {
+  background:
+    radial-gradient(circle at top right, #bae6fd60, transparent 45%),
+    radial-gradient(circle at bottom left, #ddd6fe55, transparent 40%),
+    #f4f7fd;
+  color: #0f172a;
+}
+
+.ce-root.light .ce-topbar {
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.ce-root.light .ce-logo-img {
+  filter: drop-shadow(0 0 14px rgba(56, 189, 248, 0.45));
+}
+
+.ce-root.light .ce-page-title {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  color: #0f172a;
+}
+
+.ce-root.light .ce-back-btn {
+  background: #ffffff;
+  border: 3px solid #e2e8f0;
+  color: #475569;
+}
+
+.ce-root.light .ce-back-btn:hover {
+  background: #eef2ff;
+  color: #0f172a;
+}
+
+.ce-root.light .ce-sidebar {
+  background: #ffffff;
+  border-right: 1px solid #e2e8f0;
+}
+
+.ce-root.light .ce-sidebar-header {
+  color: #0f172a;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.ce-root.light .ce-topic-block {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+}
+
+.ce-root.light .ce-topic-header {
+  color: #0f172a;
+}
+
+.ce-root.light .ce-chevron {
+  color: #94a3b8;
+}
+
+.ce-root.light .ce-subtopic {
+  color: #475569;
+}
+
+.ce-root.light .ce-subtopic:hover {
+  background: #eef2ff;
+  color: #0f172a;
+}
+
+.ce-root.light .ce-subtopic--active {
+  background: rgba(8, 145, 178, 0.1);
+  color: #0891b2;
+}
+
+.ce-root.light .ce-subtopic--active .ce-subtopic-number {
+  color: #0891b2;
+}
+
+.ce-root.light .ce-content-circle {
+  border: 1px solid #e2e8f0;
+  color: #0891b2;
+}
+
+.ce-root.light .ce-crumb-link {
+  color: #64748b;
+}
+
+.ce-root.light .ce-crumb-link:hover {
+  color: #0f172a;
+}
+
+.ce-root.light .ce-content-title {
+  color: #0f172a;
+}
+
+.ce-root.light .ce-content-divider {
+  background: #e2e8f0;
+}
+
+.ce-root.light .ce-action-card--lesson {
+  background: linear-gradient(160deg, rgba(251, 146, 60, 0.14), #ffffff);
+  border: 1px solid rgba(251, 146, 60, 0.3);
+}
+
+.ce-root.light .ce-action-card--notes {
+  background: linear-gradient(160deg, rgba(168, 85, 247, 0.14), #ffffff);
+  border: 1px solid rgba(168, 85, 247, 0.3);
+}
+
+.ce-root.light .ce-action-icon-box {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+}
+
 /* ── Topbar (same pattern as LiveBooks) ── */
 .ce-topbar {
   display: flex;
@@ -24,26 +135,21 @@
 
 .ce-logo-area {
   display: flex;
-  align-items: center;
-  gap: 12px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
 }
 
-.ce-logo-circle {
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #22d3ee, #3b82f6);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 700;
-  font-size: 18px;
-  color: #fff;
+.ce-logo-img {
+  width: 150px;
+  height: auto;
+  display: block;
+  filter: drop-shadow(0 0 18px rgba(34, 211, 238, 0.4));
 }
 
 .ce-logo-title {
   font-weight: 700;
-  font-size: 29px;
+  font-size: 22px;
 }
 
 .ce-logo-sub {
@@ -154,7 +260,7 @@
   height: 26px;
   flex-shrink: 0;
   border-radius: 50%;
-  background: linear-gradient(135deg, #a855f7, #7c3aed);
+  background: linear-gradient(135deg, #60a5fa, #2563eb);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -326,7 +432,7 @@
 }
 
 .ce-action-card--notes .ce-action-title {
-  color: #a855f7;
+  color: #22D3EE;
 }
 
 .ce-action-icon-box {
@@ -346,8 +452,8 @@
 }
 
 .ce-action-card--notes .ce-action-icon-box {
-  color: #a855f7;
-  border-bottom: 4px solid #a855f7;
+  color: #22D3EE;
+  border-bottom: 4px solid #22D3EE;
 }
 
 /* ── Responsive ── */

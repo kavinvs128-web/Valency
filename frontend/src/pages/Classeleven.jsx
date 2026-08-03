@@ -1,7 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ChevronDown, ChevronLeft, BookOpen, FileText, ListTree } from "lucide-react";
 import "../styles/Classeleven.css";
 import OxidationReduction from "../pages/OxidationReduction.jsx";
+import BeyondTheBond from "../pages/BeyondTheBond.jsx";
+import valencyLogo from "../assets/valency-logo.svg";
 const learningPath = [
   {
     id: 1,
@@ -23,7 +25,7 @@ const learningPath = [
     },  
 ];
 
-export default function ClassEleven({ onBack }) {
+export default function ClassEleven({ onBack, darkMode = true }) {
   // Which main topic is expanded in the sidebar
   const [openTopicId, setOpenTopicId] = useState(1);
 
@@ -33,24 +35,71 @@ export default function ClassEleven({ onBack }) {
   );
   const [openView, setOpenView] = useState(null);
 
+  useEffect(() => {
+
+    function handlePopState(e) {
+
+      const level = e.state && e.state.level;
+
+      if (level === "lesson" || level === "quiz") {
+        setOpenView("lesson");
+      } else if (level === "beyond") {
+        setOpenView("beyond");
+      } else {
+        setOpenView(null);
+      }
+
+    }
+
+    window.addEventListener("popstate", handlePopState);
+
+    return () => window.removeEventListener("popstate", handlePopState);
+
+  }, []);
+
+  const openLesson = () => {
+
+    window.history.pushState({ app: true, level: "lesson" }, "", window.location.href);
+
+    setOpenView("lesson");
+
+  };
+
+  const openBeyond = () => {
+
+    window.history.pushState({ app: true, level: "beyond" }, "", window.location.href);
+
+    setOpenView("beyond");
+
+  };
+
    if (openView === "lesson" && activeSubtopic.id === "1.1") {
-    return <OxidationReduction onBack={() => setOpenView(null)} />;
+    return (
+      <OxidationReduction
+        darkMode={darkMode}
+        onBack={() => window.history.back()}
+        onViewBeyond={openBeyond}
+      />
+    );
   }
-  
+
+   if (openView === "beyond" && activeSubtopic.id === "1.1") {
+    return <BeyondTheBond darkMode={darkMode} onBack={() => window.history.back()} />;
+  }
+
   const toggleTopic = (id) => {
     setOpenTopicId(openTopicId === id ? null : id);
   };
 
   return (
-    <div className="ce-root">
+    <div className={darkMode ? "ce-root" : "ce-root light"}>
       {/* Topbar */}
       <div className="ce-topbar">
         <div className="ce-top-left">
           <div className="ce-logo-area">
-            <div className="ce-logo-circle">C</div>
+            <img className="ce-logo-img" src={valencyLogo} alt="Valency" />
             <div>
-              <div className="ce-logo-title">ChemIQ</div>
-              <div className="ce-logo-sub">LEARN • EXPLORE • DISCOVER</div>
+              <div className="ce-logo-sub">LEARN • BOND • MASTER</div>
             </div>
           </div>
           <div className="ce-divider" />
@@ -131,7 +180,7 @@ export default function ClassEleven({ onBack }) {
 
           <div className="ce-cards-row">
             <div className="ce-action-card ce-action-card--lesson"
-            onClick={() => setOpenView("lesson")}
+            onClick={openLesson}
             >
               <div className="ce-action-title">Lesson</div>
               <div className="ce-action-icon-box">
@@ -139,8 +188,10 @@ export default function ClassEleven({ onBack }) {
               </div>
             </div>
 
-            <div className="ce-action-card ce-action-card--notes">
-              <div className="ce-action-title">Revision Notes</div>
+            <div className="ce-action-card ce-action-card--notes"
+            onClick={openBeyond}
+            >
+              <div className="ce-action-title">Beyond the Bond</div>
               <div className="ce-action-icon-box">
                 <FileText size={40} />
               </div>

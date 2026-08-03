@@ -1,4 +1,5 @@
 import "../styles/Livebooks.css";
+import valencyLogo from "../assets/valency-logo.svg";
 
 const categories = [
   {
@@ -30,18 +31,18 @@ const categories = [
   },
 ];
 
-export default function LiveBooks({ onBack, onSelectCategory }) {
+export default function LiveBooks({ onBack, onSelectCategory, darkMode = true }) {
   return (
-    <div className="lb-root">
+    <div className={darkMode ? "lb-root" : "lb-root light"}>
 
       {/* Topbar */}
       <div className="lb-topbar">
         <div className="lb-top-left">
           <div className="lb-logo-area">
-            <div className="lb-logo-circle">C</div>
+            <img className="lb-logo-img" src={valencyLogo} alt="Valency" />
             <div>
-              <div className="lb-logo-title">ChemIQ</div>
-              <div className="lb-logo-sub">LEARN • EXPLORE • DISCOVER</div>
+              
+              <div className="lb-logo-sub">LEARN • BOND • MASTER</div>
             </div>
           </div>
           <div className="lb-divider" />

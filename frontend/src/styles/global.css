@@ -1,3 +1,21 @@
+:root {
+  /* Periodic-table category colors (see components/periodicTable.jsx + styles/start.css) —
+     reused as the app's accent palette instead of arbitrary colors */
+  --chem-alkali: #f87171;
+  --chem-alkaline: #fb923c;
+  --chem-transition: #60a5fa;
+  --chem-nonmetal: #22d3ee;
+  --chem-noble: #a78bfa;
+  --chem-metalloid: #facc15;
+  --chem-halogen: #4ade80;
+  --chem-lanth: #f472b6;
+
+  /* One shared dark background tone, used across every page instead of
+     each page inventing its own purple/navy gradient */
+  --chem-bg-dark: #0b0d10;
+  --chem-bg-dark-2: #14171c;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -7,7 +25,7 @@
 
 body {
   min-height: 100vh;
-  background: linear-gradient(135deg, #050b18, #101d36);
+  background: linear-gradient(160deg, var(--chem-bg-dark) 0%, var(--chem-bg-dark-2) 100%);
   color: white;
 }
 
