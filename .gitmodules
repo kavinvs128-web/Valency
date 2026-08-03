@@ -1,4 +1,4 @@
 [submodule "backend"]
 	path = backend
-	url = https://github.com/kavinvenkatesan2008/Learning_with_chemistry.git
+	url = https://github.com/kavinvs128-web/Valency.git
 	branch = main
