@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-
+import OAuthSuccess from "./pages/OAuthSuccess"
 import Start from "./pages/start.jsx";
 import Signin from "./pages/Signin";
 import CreateAccount from "./pages/CreateAccount";
@@ -15,6 +15,7 @@ function App() {
         <Route path="/" element={<Start />} />
         <Route path="/signin" element={<Signin />} />
         <Route path="/create-account" element={<CreateAccount />} />
+        <Route path="/oauth-success" element={<OAuthSuccess />} />
         <Route
           path="/home"
           element={

@@ -1,4 +1,4 @@
-const API = "http://localhost:5000/api/auth";
+const API = "http://localhost:4000/api/auth";
 
 // CREATE ACCOUNT
 export async function createAccount(data) {
