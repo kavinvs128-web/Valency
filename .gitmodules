@@ -1,0 +1,4 @@
+[submodule "backend"]
+	path = backend
+	url = https://github.com/kavinvenkatesan2008/Learning_with_chemistry.git
+	branch = main
