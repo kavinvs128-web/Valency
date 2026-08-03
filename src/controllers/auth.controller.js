@@ -28,6 +28,17 @@ async function createAccount(req, res, next) {
   try {
     const { fullName, username, password, confirmPassword, phone, email } = req.body || {};
 
+    if (
+      typeof fullName !== 'string' ||
+      typeof username !== 'string' ||
+      typeof password !== 'string' ||
+      typeof confirmPassword !== 'string' ||
+      typeof phone !== 'string' ||
+      typeof email !== 'string'
+    ) {
+      return res.status(400).json({ message: 'Invalid input.' });
+    }
+
     if (!fullName || !username || !password || !confirmPassword || !phone || !email) {
       return res.status(400).json({ message: 'All fields are required.' });
     }
@@ -77,7 +88,7 @@ async function signIn(req, res, next) {
   try {
     const { email, password } = req.body || {};
 
-    if (!email || !password) {
+    if (typeof email !== 'string' || typeof password !== 'string' || !email || !password) {
       return res.status(400).json({ message: 'Email and password are required.' });
     }
 
@@ -113,5 +124,7 @@ module.exports = {
   createAccount,
   signIn,
   me,
+  buildToken,
+  sanitizeUser,
 };
 
