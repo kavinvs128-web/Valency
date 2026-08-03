@@ -3,8 +3,10 @@ const cors = require('cors');
 const helmet = require('helmet');
 const morgan = require('morgan');
 const rateLimit = require('express-rate-limit');
-
+const passport = require('./config/passport');
 const authRoutes = require('./routes/auth.routes');
+const googleAuthRoutes = require('./routes/auth');
+const attemptsRoutes = require('./routes/attempts.routes');
 
 
 function createApp() {
@@ -37,8 +39,6 @@ function createApp() {
   })
 );
 
-
-
   // JSON
   app.use(
     express.json()
@@ -65,11 +65,20 @@ function createApp() {
 
 
 
+  // passport (stateless — JWT only, no server-side sessions)
+  app.use(passport.initialize());
+
+
+
   // routes
   app.use(
     "/api/auth",
     authRoutes
   );
+
+  app.use("/api/v1/auth", googleAuthRoutes);
+
+  app.use("/api/attempts", attemptsRoutes);
 
 
 
