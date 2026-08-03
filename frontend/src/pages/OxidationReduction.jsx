@@ -277,7 +277,7 @@ function Quiz() {
 }
 
 /* ---------- Full-page Quiz ---------- */
-function QuizPage({ onBack }) {
+function QuizPage({ onBack, darkMode = true }) {
   const [currentQ, setCurrentQ] = useState(0);
   const [selected, setSelected] = useState(null);
   const [answered, setAnswered] = useState(false);
@@ -337,7 +337,7 @@ function QuizPage({ onBack }) {
   const progressPct = (currentQ / fullQuizData.length) * 100;
 
   return (
-    <div className="or-root">
+    <div className={darkMode ? "or-root" : "or-root light"}>
       {/* Topbar */}
       <div className="or-topbar">
         <div className="or-top-left">
@@ -417,7 +417,7 @@ function QuizPage({ onBack }) {
             <div className="or-qp-result-divider" />
             <p className="or-qp-result-msg">
               {passed
-                ? "Great job! You passed the Oxidation & Reduction quiz. You have a solid understanding of redox reactions, oxidation numbers, and agents."
+                ? "You passed the Oxidation & Reduction quiz — you have a solid understanding of redox reactions, oxidation numbers, and agents."
                 : "Not quite — review the sections on OIL RIG, oxidation numbers, and disproportionation, then try again."}
             </p>
             <div className="or-qp-breakdown">
@@ -446,10 +446,34 @@ function QuizPage({ onBack }) {
 }
 
 /* ---------- Main component ---------- */
-export default function OxidationReduction({ onBack }) {
+export default function OxidationReduction({ onBack, onViewBeyond, darkMode = true }) {
   const [activeNav, setActiveNav] = useState("or-hero");
   const [progress, setProgress] = useState(0);
   const [showQuiz, setShowQuiz] = useState(false);
+
+  useEffect(() => {
+
+    function handlePopState(e) {
+
+      const level = e.state && e.state.level;
+
+      setShowQuiz(level === "quiz");
+
+    }
+
+    window.addEventListener("popstate", handlePopState);
+
+    return () => window.removeEventListener("popstate", handlePopState);
+
+  }, []);
+
+  const startQuiz = () => {
+
+    window.history.pushState({ app: true, level: "quiz" }, "", window.location.href);
+
+    setShowQuiz(true);
+
+  };
 
   const handleScroll = useCallback(() => {
     const h = document.documentElement;
@@ -475,10 +499,10 @@ export default function OxidationReduction({ onBack }) {
   };
 
   /* Show full quiz page instead of lesson */
-  if (showQuiz) return <QuizPage onBack={() => setShowQuiz(false)} />;
+  if (showQuiz) return <QuizPage darkMode={darkMode} onBack={() => window.history.back()} />;
 
   return (
-    <div className="or-root">
+    <div className={darkMode ? "or-root" : "or-root light"}>
       {/* Topbar */}
       <div className="or-topbar">
         <div className="or-top-left">
@@ -764,12 +788,20 @@ export default function OxidationReduction({ onBack }) {
         
          <div className="career-image-section">
 
-        <img 
+        <img
           src={careerMap}
           alt="Oxidation and Reduction Career Pathway"
         />
 
-</div>       
+</div>
+
+        {onViewBeyond && (
+          <div className="or-read-more-row">
+            <button className="or-read-more-btn" onClick={onViewBeyond}>
+              Read More <ArrowRight size={18} />
+            </button>
+          </div>
+        )}
 
         {/* Quiz CTA — bottom of page */}
         <div className="or-quiz-cta-card">
@@ -784,7 +816,7 @@ export default function OxidationReduction({ onBack }) {
                 <span className="or-quiz-cta-meta-item">✅ Get 60% or more to pass</span>
                 <span className="or-quiz-cta-meta-item">🕐 ~5 minutes</span>
               </div>
-              <button className="or-quiz-cta-btn" onClick={() => setShowQuiz(true)}>
+              <button className="or-quiz-cta-btn" onClick={startQuiz}>
                 Start Quiz <ArrowRight size={16} />
               </button>
             </div>
