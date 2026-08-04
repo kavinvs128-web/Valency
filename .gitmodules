@@ -1,4 +1,0 @@
-[submodule "backend"]
-	path = backend
-	url = https://github.com/kavinvs128-web/Valency.git
-	branch = main
