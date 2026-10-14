@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { ArrowLeft, Zap, RotateCcw, ChevronRight, ArrowRight, CheckCircle, XCircle } from "lucide-react";
 import "../styles/OxidationReduction.css";
-import careerMap from "../assets/oxidation-career-map.png";
+import careerMap from "../assets/oxidation-career-map.webp";
 /* ---------- Static content data ---------- */
 
 const sideNavItems = [

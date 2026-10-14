@@ -244,7 +244,7 @@ const JOBS_INDIA = [
   {
     id: "ji1",
     title: "Electrochemist / Cell Engineer — EV and Battery",
-    subtitle: "🔥 Hottest redox career in India 2025. PLI scheme driving gigafactory demand.",
+    subtitle: " Hottest redox career in India 2025. PLI scheme driving gigafactory demand.",
     employers: "Ola Electric, Exide Energy, Amara Raja, Tata Motors, ISRO SPL, Reliance New Energy",
     quals: ["B.Tech / M.Tech", "GATE"],
     fresher: "₹7–16 LPA",

@@ -1,9 +1,15 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense, lazy } from "react";
 import { ChevronDown, ChevronLeft, BookOpen, FileText, ListTree } from "lucide-react";
 import "../styles/Classeleven.css";
-import OxidationReduction from "../pages/OxidationReduction.jsx";
-import BeyondTheBond from "../pages/BeyondTheBond.jsx";
+import PageLoader from "../components/PageLoader";
 import valencyLogo from "../assets/valency-logo.svg";
+
+const OxidationReduction = lazy(() => import("../pages/OxidationReduction.jsx"));
+const BeyondTheBond = lazy(() => import("../pages/BeyondTheBond.jsx"));
+const MoleConcept = lazy(() => import("../pages/MoleConcept.jsx"));
+const BeyondTheMole = lazy(() => import("../pages/BeyondTheMole.jsx"));
+const EmpiricalMolecularFormula = lazy(() => import("../pages/EmpiricalMolecularFormula.jsx"));
+const BeyondTheEmpirical = lazy(() => import("../pages/BeyondTheEmpirical.jsx"));
 const learningPath = [
   {
     id: 1,
@@ -12,6 +18,14 @@ const learningPath = [
       {
         id: "1.1",
         title: "Oxidation And Reduction",
+      },
+            {
+        id: "1.2",
+        title: "Mole Concept",
+      },
+            {
+        id: "1.3",
+        title: "Empirical and Molecular Formula",
       },
     ],
   },
@@ -75,16 +89,62 @@ export default function ClassEleven({ onBack, darkMode = true }) {
 
    if (openView === "lesson" && activeSubtopic.id === "1.1") {
     return (
-      <OxidationReduction
-        darkMode={darkMode}
-        onBack={() => window.history.back()}
-        onViewBeyond={openBeyond}
-      />
+      <Suspense fallback={<PageLoader />}>
+        <OxidationReduction
+          darkMode={darkMode}
+          onBack={() => window.history.back()}
+          onViewBeyond={openBeyond}
+        />
+      </Suspense>
+    );
+  }
+
+   if (openView === "lesson" && activeSubtopic.id === "1.2") {
+    return (
+      <Suspense fallback={<PageLoader />}>
+        <MoleConcept
+          darkMode={darkMode}
+          onBack={() => window.history.back()}
+          onViewBeyond={openBeyond}
+        />
+      </Suspense>
+    );
+  }
+
+   if (openView === "lesson" && activeSubtopic.id === "1.3") {
+    return (
+      <Suspense fallback={<PageLoader />}>
+        <EmpiricalMolecularFormula
+          darkMode={darkMode}
+          onBack={() => window.history.back()}
+          onViewBeyond={openBeyond}
+        />
+      </Suspense>
     );
   }
 
    if (openView === "beyond" && activeSubtopic.id === "1.1") {
-    return <BeyondTheBond darkMode={darkMode} onBack={() => window.history.back()} />;
+    return (
+      <Suspense fallback={<PageLoader />}>
+        <BeyondTheBond darkMode={darkMode} onBack={() => window.history.back()} />
+      </Suspense>
+    );
+  }
+
+   if (openView === "beyond" && activeSubtopic.id === "1.2") {
+    return (
+      <Suspense fallback={<PageLoader />}>
+        <BeyondTheMole darkMode={darkMode} onBack={() => window.history.back()} />
+      </Suspense>
+    );
+  }
+
+   if (openView === "beyond" && activeSubtopic.id === "1.3") {
+    return (
+      <Suspense fallback={<PageLoader />}>
+        <BeyondTheEmpirical darkMode={darkMode} onBack={() => window.history.back()} />
+      </Suspense>
+    );
   }
 
   const toggleTopic = (id) => {

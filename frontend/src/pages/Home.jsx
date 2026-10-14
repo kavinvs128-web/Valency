@@ -11,17 +11,18 @@ import {
   LogOut
 } from "lucide-react";
 
-import {useState,useEffect} from "react";
+import {useState,useEffect,Suspense,lazy} from "react";
 import { useNavigate } from "react-router-dom";
 
 import WordsOfWisdom from "../components/WordsOfWisdom";
+import PageLoader from "../components/PageLoader";
 import valencyLogo from "../assets/valency-logo.svg";
 
 import "../styles/home.css";
-import Livebooks from "../pages/Livebooks.jsx";
-import Classeleven from "../pages/Classeleven.jsx";
-import ReactionLog from "../pages/ReactionLog.jsx";
-import WeeklyTestPage from "../pages/WeeklyTestPage.jsx";
+const Livebooks = lazy(() => import("../pages/Livebooks.jsx"));
+const Classeleven = lazy(() => import("../pages/Classeleven.jsx"));
+const ReactionLog = lazy(() => import("../pages/ReactionLog.jsx"));
+const WeeklyTestPage = lazy(() => import("../pages/WeeklyTestPage.jsx"));
 function Home(){
 
 const navigate = useNavigate();
@@ -158,39 +159,49 @@ navigate("/signin");
 
 if (activePage === "livebooks") {
   return (
-    <Livebooks
-      darkMode={darkMode}
-      onBack={() => window.history.back()}
-      onSelectCategory={(categoryId) => {
-        if (categoryId === "class11") {
-          goToClass11();
-        }
-      }}
-    />
+    <Suspense fallback={<PageLoader />}>
+      <Livebooks
+        darkMode={darkMode}
+        onBack={() => window.history.back()}
+        onSelectCategory={(categoryId) => {
+          if (categoryId === "class11") {
+            goToClass11();
+          }
+        }}
+      />
+    </Suspense>
   );
 }
 
 if (activePage === "class11") {
-  return <Classeleven darkMode={darkMode} onBack={() => window.history.back()} />;
+  return (
+    <Suspense fallback={<PageLoader />}>
+      <Classeleven darkMode={darkMode} onBack={() => window.history.back()} />
+    </Suspense>
+  );
 }
 
 if (activePage === "attempts") {
   return (
-    <ReactionLog
-      darkMode={darkMode}
-      onBack={() => window.history.back()}
-      onTakeQuiz={goToSurpriseTest}
-    />
+    <Suspense fallback={<PageLoader />}>
+      <ReactionLog
+        darkMode={darkMode}
+        onBack={() => window.history.back()}
+        onTakeQuiz={goToSurpriseTest}
+      />
+    </Suspense>
   );
 }
 
 if (activePage === "surprisetest") {
   return (
-    <WeeklyTestPage
-      key={surpriseTestKey}
-      darkMode={darkMode}
-      onBack={() => window.history.back()}
-    />
+    <Suspense fallback={<PageLoader />}>
+      <WeeklyTestPage
+        key={surpriseTestKey}
+        darkMode={darkMode}
+        onBack={() => window.history.back()}
+      />
+    </Suspense>
   );
 }
 
