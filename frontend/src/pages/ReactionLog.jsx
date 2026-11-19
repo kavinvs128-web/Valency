@@ -2,14 +2,18 @@ import { useEffect, useMemo, useState } from "react";
 import { Trophy, Search, X, CheckCircle2, XCircle, ArrowRight, Pencil, Trash2 } from "lucide-react";
 import "../styles/ReactionLog.css";
 import valencyLogo from "../assets/valency-logo.svg";
-import { getAttempts, formatSubmittedOn, updateAttempt, deleteAttempt } from "../services/attempts";
+import { getAttempts, getAttemptStats, formatSubmittedOn, updateAttempt, deleteAttempt } from "../services/attempts";
+import useDebouncedValue from "../hooks/useDebouncedValue";
 
 export default function ReactionLog({ onBack, onTakeQuiz, darkMode = true }) {
   const [attempts, setAttempts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [loadError, setLoadError] = useState(false);
+  const [stats, setStats] = useState(null);
   const [query, setQuery] = useState("");
+  const debouncedQuery = useDebouncedValue(query, 300);
   const [viewing, setViewing] = useState(null);
+
 
   const [editing, setEditing] = useState(null);
   const [editValue, setEditValue] = useState("");
@@ -19,16 +23,16 @@ export default function ReactionLog({ onBack, onTakeQuiz, darkMode = true }) {
   const [deleting, setDeleting] = useState(null);
   const [deletingBusy, setDeletingBusy] = useState(false);
   const [deleteError, setDeleteError] = useState(false);
-
   useEffect(() => {
     let cancelled = false;
-
-    getAttempts()
-      .then((data) => {
-        if (!cancelled) setAttempts(data);
-      })
-      .catch(() => {
-        if (!cancelled) setLoadError(true);
+    // Start both requests at the same time. allSettled waits for both and never rejects, so I
+    // can treat them differently: the attempts list is required, the stats summary is optional.
+    Promise.allSettled([getAttempts(), getAttemptStats()])
+      .then(([attemptsResult, statsResult]) => {
+        if (cancelled) return;
+        if (attemptsResult.status === "fulfilled") setAttempts(attemptsResult.value);
+        else setLoadError(true);
+        if (statsResult.status === "fulfilled") setStats(statsResult.value);
       })
       .finally(() => {
         if (!cancelled) setLoading(false);
@@ -40,10 +44,15 @@ export default function ReactionLog({ onBack, onTakeQuiz, darkMode = true }) {
   }, []);
 
   const filtered = useMemo(() => {
-    const q = query.trim().toLowerCase();
+    const q = debouncedQuery.trim().toLowerCase();
     if (!q) return attempts;
     return attempts.filter((a) => a.assessment.toLowerCase().includes(q));
-  }, [attempts, query]);
+  }, [attempts, debouncedQuery]);
+
+  // Deleting an attempt changes the totals, so ask the server for fresh stats.
+  function refreshStats() {
+    getAttemptStats().then(setStats).catch(() => {});
+  }
 
   function startEdit(attempt) {
     setEditing(attempt);
@@ -73,7 +82,6 @@ export default function ReactionLog({ onBack, onTakeQuiz, darkMode = true }) {
       setSavingEdit(false);
     }
   }
-
   async function handleDeleteConfirm() {
     if (deletingBusy) return;
 
@@ -84,13 +92,13 @@ export default function ReactionLog({ onBack, onTakeQuiz, darkMode = true }) {
       await deleteAttempt(deleting._id);
       setAttempts((prev) => prev.filter((a) => a._id !== deleting._id));
       setDeleting(null);
+      refreshStats();
     } catch {
       setDeleteError(true);
     } finally {
       setDeletingBusy(false);
     }
   }
-
   return (
     <div className={darkMode ? "rl-root" : "rl-root light"}>
       {/* Topbar */}
@@ -111,8 +119,7 @@ export default function ReactionLog({ onBack, onTakeQuiz, darkMode = true }) {
         <button className="rl-back-btn" onClick={onBack}>
           ← Back to Home
         </button>
-      </div>
-
+      </div> 
       <div className="rl-content">
         <div className="rl-heading-row">
           <div className="rl-heading-icon">
@@ -122,7 +129,22 @@ export default function ReactionLog({ onBack, onTakeQuiz, darkMode = true }) {
           <span className="rl-beta-badge">BETA</span>
         </div>
 
-        
+        {!loading && !loadError && stats && stats.totalAttempts > 0 && (
+          <div className="rl-stats">
+            <div className="rl-stat">
+              <div className="rl-stat-num">{stats.totalAttempts}</div>
+              <div className="rl-stat-label">Attempts</div>
+            </div>
+            <div className="rl-stat">
+              <div className="rl-stat-num">{stats.averageScorePct}%</div>
+              <div className="rl-stat-label">Average score</div>
+            </div>
+            <div className="rl-stat">
+              <div className="rl-stat-num">{stats.bestScorePct}%</div>
+              <div className="rl-stat-label">Best score</div>
+            </div>
+          </div>
+        )}
 
         {!loading && !loadError && attempts.length > 0 && (
           <div className="rl-toolbar">
@@ -136,7 +158,7 @@ export default function ReactionLog({ onBack, onTakeQuiz, darkMode = true }) {
             </div>
           </div>
         )}
-
+        {/* A useEffect with an empty dependency array runs once when the page mounts and calls getAttempts. On success set the attempts */}
         {loading ? (
           <div className="rl-empty">
             <p className="rl-empty-sub">Loading your reaction log…</p>
@@ -151,6 +173,7 @@ export default function ReactionLog({ onBack, onTakeQuiz, darkMode = true }) {
               Something went wrong reaching the server. Make sure you're
               signed in and try again.
             </p>
+           
           </div>
         ) : attempts.length === 0 ? (
           <div className="rl-empty">
@@ -174,6 +197,7 @@ export default function ReactionLog({ onBack, onTakeQuiz, darkMode = true }) {
           <div className="rl-table-wrap">
             <table className="rl-table">
               <thead>
+                {/* On failure set loadError. In finally set loading to false the UI shows a loading state first, then either the list or an error message */}
                 <tr>
                   <th>#</th>
                   <th>Assessment</th>
@@ -208,6 +232,7 @@ export default function ReactionLog({ onBack, onTakeQuiz, darkMode = true }) {
                         >
                           <Pencil size={16} />
                         </button>
+
                         <button
                           className="rl-icon-btn danger"
                           title="Delete this attempt"

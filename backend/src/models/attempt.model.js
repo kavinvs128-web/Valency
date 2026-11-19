@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-
 const breakdownItemSchema = new mongoose.Schema(
   {
     question: { type: String, required: true },

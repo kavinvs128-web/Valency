@@ -7,6 +7,7 @@ const passport = require('./config/passport');
 const authRoutes = require('./routes/auth.routes');
 const googleAuthRoutes = require('./routes/auth');
 const attemptsRoutes = require('./routes/attempts.routes');
+const aiRoutes = require('./routes/ai.routes');
 
 
 function createApp() {
@@ -53,7 +54,7 @@ function createApp() {
 
 
 
-  // limit
+
   app.use(
     rateLimit({
       windowMs:15*60*1000,
@@ -62,8 +63,6 @@ function createApp() {
       legacyHeaders:false
     })
   );
-
-
 
   // passport (stateless — JWT only, no server-side sessions)
   app.use(passport.initialize());
@@ -79,6 +78,8 @@ function createApp() {
   app.use("/api/v1/auth", googleAuthRoutes);
 
   app.use("/api/attempts", attemptsRoutes);
+
+  app.use("/api/ai", aiRoutes);
 
 
 

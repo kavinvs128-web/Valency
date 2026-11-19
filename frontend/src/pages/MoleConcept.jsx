@@ -29,7 +29,6 @@ const sideNavItems = [
 ];
 
 const NA = 6.022e23;
-
 const substances = [
   { id: "h2o", label: "H₂O", name: "Water", M: 18 },
   { id: "co2", label: "CO₂", name: "Carbon dioxide", M: 44 },
@@ -94,7 +93,6 @@ const midQuizData = [
     explain: <>n = N / N<sub>A</sub> = 1.505 × 10²³ ÷ 6.022 × 10²³ ≈ 0.25 mol.</>,
   },
 ];
-
 /* Full-page quiz data */
 const fullQuizData = [
   {
@@ -140,7 +138,6 @@ const industryCards = [
   { num: "03", title: "Chemical Industries", eq: "Raw materials → Reaction → Products", use: "Select the correct amount of raw material, predicts product quantity, and reduces wastage." },
   { num: "04", title: "Laboratory Applications", eq: "Titration · Solution preparation", use: "Chemists use mole calculations for solution preparation, titration, and quantitative analysis." },
 ];
-
 const practiceQuestions = [
   "Find the number of moles in 9 g of water (H₂O).",
   "How many molecules are present in 0.5 mole of CO₂?",
@@ -202,8 +199,7 @@ const careerMapRows = [
     items: "JEE · NEET · CUET · IIT JAM · CSIR-NET · GATE · BARC OCES · GRE",
   },
 ];
-
-/* ---------- Formats a number in a×10^b scientific notation as JSX ---------- */
+/* ----------.js Formats a number in a×10^b scientific notation as JSX ---------- */
 function formatSci(num) {
   if (num === 0) return "0";
   const exp = num.toExponential(3);
@@ -255,8 +251,7 @@ function MoleChain() {
           <div className="mc-box-value">{active ? formatSci(N) : "?"}</div>
         </div>
       </div>
-
-      <div className="mc-chain-controls">
+          <div className="mc-chain-controls">
         <button className="mc-convert-btn" onClick={() => setActive((a) => !a)}>
           {active ? (
             <><RotateCcw size={22} style={{ marginRight: 6, verticalAlign: "-2px" }} />Reset</>
@@ -268,7 +263,6 @@ function MoleChain() {
     </div>
   );
 }
-
 /* ---------- MoleCalculator: interactive mass ↔ moles ↔ particles ---------- */
 function MoleCalculator() {
   const [subId, setSubId] = useState("h2o");
@@ -304,7 +298,6 @@ function MoleCalculator() {
         />
         <span className="mc-calc-mass-value">{mass} g</span>
       </div>
-
       <div className="mc-calc-results">
         <div className="mc-calc-result-card n">
           <div className="mc-calc-result-label">Number of moles</div>
@@ -320,7 +313,6 @@ function MoleCalculator() {
     </div>
   );
 }
-
 /* ---------- MemoryMatch: flip tiles to pair each formula with its meaning ---------- */
 function MemoryMatch() {
   const [tiles, setTiles] = useState(() => shuffleTiles());

@@ -178,6 +178,44 @@
   color: #92400e;
 }
 
+/* Summary numbers from GET /api/attempts/stats */
+.rl-stats {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 22px;
+}
+
+.rl-stat {
+  flex: 1 1 160px;
+  background: #0d1527;
+  border: 1px solid #1e2a3a;
+  border-radius: 16px;
+  padding: 16px 22px;
+}
+
+.rl-root.light .rl-stat {
+  background: #ffffff;
+  border-color: #e2e8f0;
+}
+
+.rl-stat-num {
+  font-size: 30px;
+  font-weight: 700;
+  color: #a78bfa;
+  line-height: 1.1;
+}
+
+.rl-root.light .rl-stat-num {
+  color: #7c3aed;
+}
+
+.rl-stat-label {
+  margin-top: 4px;
+  font-size: 15px;
+  color: #64748b;
+}
+
 .rl-toolbar {
   display: flex;
   justify-content: flex-end;

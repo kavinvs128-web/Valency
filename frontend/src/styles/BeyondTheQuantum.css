@@ -1,0 +1,236 @@
+/* ===== BeyondTheQuantum.css ===== */
+/* Career roadmap page for the Quantum Mechanics of an Atom lesson.
+   Same layout as the other Beyond pages, with the purple interactive accent
+   from the lesson. Verification badge colours (teal/green/amber) unchanged. */
+
+.btq-root {
+  min-height: 100vh;
+  background: #0b0e1f;
+  color: #e2e6ff;
+  font-family: 'Inter', 'Segoe UI', sans-serif;
+  font-size: 19px;
+}
+
+.btq-root.light {
+  background:
+    radial-gradient(circle at top right, #ddd6fe60, transparent 45%),
+    radial-gradient(circle at bottom left, #bae6fd55, transparent 40%),
+    #f4f7fd;
+  color: #1e293b;
+}
+
+/* ── Topbar ── */
+.btq-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 40px 40px;
+  border-bottom: 1px solid #1f2448;
+}
+.btq-root.light .btq-topbar { border-bottom-color: #e2e8f0; }
+
+.btq-top-left { display: flex; align-items: center; gap: 20px; }
+.btq-logo-area { display: flex; flex-direction: column; align-items: flex-start; gap: 4px; }
+.btq-logo-img { width: 150px; height: auto; display: block; filter: drop-shadow(0 0 18px rgba(167, 139, 250, 0.4)); }
+.btq-root.light .btq-logo-img { filter: drop-shadow(0 0 14px rgba(167, 139, 250, 0.4)); }
+.btq-logo-sub { font-size: 15px; color: #a78bfa; letter-spacing: 1px; }
+.btq-divider { width: 2px; height: 45px; background: #1f2448; }
+.btq-root.light .btq-divider { background: #e2e8f0; }
+.btq-page-title { display: flex; align-items: center; gap: 8px; background: #12152e; border: 1px solid #1f2448; border-radius: 20px; padding: 6px 16px; font-weight: 600; font-size: 19px; }
+.btq-root.light .btq-page-title { background: #ffffff; border-color: #e2e8f0; color: #1e293b; }
+.btq-back-btn { display: inline-flex; align-items: center; gap: 10px; background: #1e293b; border: 3px solid #334155; border-radius: 28px; color: #94a3b8; padding: 14px 28px; font-size: 22px; font-family: inherit; cursor: pointer; transition: background 0.2s, color 0.2s; }
+.btq-back-btn:hover { background: #334155; color: #e2e8f0; }
+.btq-root.light .btq-back-btn { background: #ffffff; border-color: #e2e8f0; color: #475569; }
+.btq-root.light .btq-back-btn:hover { background: #eef2ff; color: #1e293b; }
+
+/* ── Hero ── */
+.btq-hero {
+  background: linear-gradient(135deg, #14102a 0%, #1a1238 100%);
+  border-bottom: 1px solid #1f2448;
+  padding: 64px 40px 52px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.btq-root.light .btq-hero { background: linear-gradient(135deg, #ede9fe 0%, #e0f2fe 100%); border-bottom-color: #e2e8f0; }
+
+.btq-hero-chip { display: inline-flex; align-items: center; gap: 10px; background: #1a1d40; border: 1px solid #2e3270; border-radius: 30px; padding: 12px 28px; font-size: 18px; color: #a78bfa; margin-bottom: 26px; letter-spacing: .04em; }
+.btq-root.light .btq-hero-chip { background: #ffffff; border-color: #ddd6fe; color: #6d28d9; }
+.btq-hero-title { font-size: 56px; font-weight: 800; color: #fff; line-height: 1.2; margin-bottom: 18px; }
+.btq-root.light .btq-hero-title { color: #1e293b; }
+.btq-hero-title span { color: #a78bfa; }
+.btq-hero-sub { font-size: 24px; color: #7b82b4; max-width: 900px; margin: 0 auto 36px; line-height: 1.6; }
+.btq-root.light .btq-hero-sub { color: #475569; }
+.btq-hero-stats { display: flex; justify-content: center; gap: 58px; flex-wrap: wrap; }
+.btq-stat { padding: 4px 6px; border-radius: 12px; }
+.btq-stat-num { font-size: 42px; font-weight: 800; color: #a78bfa; }
+.btq-stat.search .btq-stat-num { color: #2dd4bf; }
+.btq-stat.scale .btq-stat-num { color: #4ade80; }
+.btq-stat.estimate .btq-stat-num { color: #fbbf24; }
+.btq-stat-label { font-size: 18px; color: #7b82b4; margin-top: 6px; }
+.btq-root.light .btq-stat-label { color: #64748b; }
+
+/* ── Tabs ── */
+.btq-nav-tabs { display: flex; gap: 8px; padding: 20px 32px 0; background: #0e1127; border-bottom: 1px solid #1f2448; overflow-x: auto; }
+.btq-root.light .btq-nav-tabs { background: #ffffff; border-bottom-color: #e2e8f0; }
+.btq-tab { display: inline-flex; align-items: center; padding: 18px 28px; border-radius: 12px 12px 0 0; font-size: 19px; font-weight: 600; color: #7b82b4; cursor: pointer; white-space: nowrap; border: none; background: none; transition: all .2s; border-bottom: 4px solid transparent; font-family: inherit; }
+.btq-tab.active { color: #a78bfa; background: #12152e; border-bottom: 4px solid #a78bfa; }
+.btq-root.light .btq-tab.active { background: #f5f3ff; }
+.btq-tab:hover:not(.active) { color: #c5c9ef; background: #12152e; }
+.btq-root.light .btq-tab:hover:not(.active) { color: #475569; background: #f8fafc; }
+.btq-tab-icon { margin-right: 10px; }
+
+/* ── Section ── */
+.btq-section { padding: 40px; max-width: 1500px; margin: 0 auto; }
+.btq-sec-title { font-size: 32px; font-weight: 700; color: #fff; margin-bottom: 10px; }
+.btq-root.light .btq-sec-title { color: #1e293b; }
+.btq-sec-desc { font-size: 20px; color: #7b82b4; margin-bottom: 32px; line-height: 1.5; }
+.btq-root.light .btq-sec-desc { color: #64748b; }
+.btq-accent { color: #a78bfa; }
+
+/* ── Table ── */
+.btq-table-wrap { background: #12152e; border: 1px solid #1f2448; border-radius: 22px; overflow: hidden; }
+.btq-root.light .btq-table-wrap { background: #ffffff; border-color: #e2e8f0; box-shadow: 0 12px 34px rgba(15, 23, 42, 0.06); }
+.btq-table-row { display: grid; align-items: center; padding: 26px 30px; border-bottom: 1px solid #1f2448; transition: background .15s; cursor: pointer; }
+.btq-root.light .btq-table-row { border-bottom-color: #f1f5f9; }
+.btq-table-row:last-child { border-bottom: none; }
+.btq-table-row:hover { background: #181c38; }
+.btq-root.light .btq-table-row:hover { background: #f8fafc; }
+.btq-table-header { background: #0d1028; padding: 20px 30px; display: grid; font-size: 17px; color: #7b82b4; font-weight: 600; letter-spacing: .05em; text-transform: uppercase; }
+.btq-root.light .btq-table-header { background: #f8fafc; color: #64748b; }
+.btq-col-4 { grid-template-columns: 2fr 1.2fr 1fr 1.1fr; gap: 16px; }
+.btq-col-5 { grid-template-columns: 2.2fr 1.6fr 1.2fr 1fr 1fr; gap: 16px; }
+.btq-row-main { font-size: 23px; font-weight: 600; color: #c5c9ef; display: flex; align-items: center; gap: 10px; }
+.btq-root.light .btq-row-main { color: #1e293b; }
+.btq-row-sub { font-size: 18px; color: #7b82b4; margin-top: 6px; line-height: 1.4; }
+.btq-root.light .btq-row-sub { color: #64748b; }
+
+/* ── Badges ── */
+.btq-badge { display: inline-block; font-size: 16px; padding: 7px 17px; border-radius: 10px; font-weight: 600; margin: 4px 5px 0 0; background: #1a1d30; color: #8b91cc; }
+.btq-root.light .btq-badge { background: #f1f5f9; color: #475569; }
+
+/* ── Verification badges ── */
+.btq-verified { display: inline-flex; align-items: center; gap: 5px; font-size: 14px; font-weight: 700; padding: 4px 10px; border-radius: 7px; margin-top: 8px; letter-spacing: .02em; }
+.btq-verified--search { background: rgba(45, 212, 191, 0.14); color: #2dd4bf; }
+.btq-verified--scale { background: rgba(74, 222, 128, 0.14); color: #4ade80; }
+.btq-verified--estimate { background: rgba(251, 191, 36, 0.14); color: #fbbf24; }
+.btq-verified-note { font-size: 17px; color: #7b82b4; line-height: 1.6; margin-top: 14px; padding: 14px 18px; background: #0d1028; border-left: 3px solid #334155; border-radius: 0 8px 8px 0; }
+.btq-root.light .btq-verified-note { background: #f8fafc; color: #475569; }
+.btq-verified-note strong { color: #c5c9ef; }
+.btq-root.light .btq-verified-note strong { color: #334155; }
+
+/* ── Salary bars ── */
+.btq-salary-text { font-size: 22px; font-weight: 700; color: #2dd4bf; }
+.btq-salary-bar { height: 12px; border-radius: 6px; background: #1a1d30; margin-top: 10px; overflow: hidden; }
+.btq-root.light .btq-salary-bar { background: #e2e8f0; }
+.btq-salary-fill { height: 100%; border-radius: 6px; background: linear-gradient(90deg, #7c3aed, #00d4aa); }
+
+/* ── Expand panel ── */
+.btq-expand { background: #0d1028; border-top: 1px solid #1f2448; padding: 30px 32px; }
+.btq-root.light .btq-expand { background: #f8fafc; border-top-color: #e2e8f0; }
+.btq-detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 18px; }
+@media (max-width: 800px) { .btq-detail-grid { grid-template-columns: 1fr; } }
+.btq-detail-item { background: #12152e; border: 1px solid #1f2448; border-radius: 14px; padding: 20px 24px; }
+.btq-root.light .btq-detail-item { background: #ffffff; border-color: #e2e8f0; }
+.btq-detail-label { font-size: 17px; color: #7b82b4; text-transform: uppercase; letter-spacing: .05em; margin-bottom: 8px; }
+.btq-detail-val { font-size: 20px; color: #c5c9ef; line-height: 1.5; }
+.btq-root.light .btq-detail-val { color: #1e293b; }
+.btq-arrow { transition: transform .2s; flex-shrink: 0; color: #7b82b4; }
+.btq-arrow.open { transform: rotate(180deg); }
+
+/* ── Path layout (PG / Jobs Abroad) ── */
+.btq-path-wrap { display: flex; flex-direction: column; gap: 0; }
+.btq-path-step { display: flex; gap: 22px; align-items: flex-start; }
+.btq-path-line-col { display: flex; flex-direction: column; align-items: center; width: 58px; flex-shrink: 0; }
+.btq-path-circle { width: 58px; height: 58px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 23px; font-weight: 700; flex-shrink: 0; border: 4px solid rgba(167, 139, 250, 0.5); background: #1d1640; color: #a78bfa; }
+.btq-path-connector { width: 4px; flex: 1; min-height: 36px; margin: 8px 0; background: linear-gradient(#7c3aed, #00d4aa); }
+.btq-path-body { flex: 1; padding-bottom: 40px; }
+.btq-path-title { font-size: 26px; font-weight: 700; color: #fff; margin-bottom: 14px; }
+.btq-root.light .btq-path-title { color: #1e293b; }
+.btq-path-entries { display: flex; flex-direction: column; gap: 14px; }
+.btq-path-entry { background: #12152e; border: 1px solid #1f2448; border-radius: 16px; padding: 24px 28px; display: flex; justify-content: space-between; align-items: flex-start; gap: 22px; cursor: pointer; transition: background .15s; }
+.btq-root.light .btq-path-entry { background: #ffffff; border-color: #e2e8f0; }
+.btq-path-entry:hover { background: #181c38; }
+.btq-root.light .btq-path-entry:hover { background: #f8fafc; }
+.btq-pe-left { flex: 1; }
+.btq-pe-title { font-size: 23px; font-weight: 600; color: #c5c9ef; display: flex; align-items: center; gap: 10px; }
+.btq-root.light .btq-pe-title { color: #1e293b; }
+.btq-pe-desc { font-size: 18px; color: #7b82b4; margin-top: 8px; line-height: 1.6; }
+.btq-root.light .btq-pe-desc { color: #64748b; }
+.btq-pe-badges { margin-top: 12px; }
+.btq-pe-right { text-align: right; flex-shrink: 0; }
+.btq-pe-salary { font-size: 23px; font-weight: 700; color: #2dd4bf; }
+.btq-pe-tag { font-size: 17px; color: #7b82b4; margin-top: 6px; }
+.btq-root.light .btq-pe-tag { color: #64748b; }
+
+/* ── Industry list ── */
+.btq-ind-list { display: flex; flex-direction: column; gap: 18px; }
+.btq-ind-row { background: #12152e; border: 1px solid #1f2448; border-radius: 18px; padding: 28px 32px; display: flex; align-items: flex-start; gap: 22px; }
+.btq-root.light .btq-ind-row { background: #ffffff; border-color: #e2e8f0; box-shadow: 0 8px 24px rgba(15, 23, 42, 0.05); }
+.btq-ind-row--compact { padding: 20px 22px; }
+.btq-ind-num { width: 48px; height: 48px; border-radius: 11px; background: #1d1640; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 700; color: #a78bfa; flex-shrink: 0; }
+.btq-ind-title { font-size: 24px; font-weight: 700; color: #fff; margin-bottom: 8px; }
+.btq-root.light .btq-ind-title { color: #1e293b; }
+.btq-ind-desc { font-size: 18px; color: #7b82b4; line-height: 1.6; margin-bottom: 14px; }
+.btq-root.light .btq-ind-desc { color: #475569; }
+.btq-ind-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+.btq-free-provider { color: #a78bfa; font-weight: 500; font-size: 17px; }
+
+/* ── Skills ── */
+.btq-why-banner { background: linear-gradient(135deg, #1a0e3a, #0e1a30); border: 1px solid #2e3270; border-radius: 20px; padding: 34px; margin-bottom: 30px; display: flex; gap: 22px; align-items: flex-start; }
+.btq-root.light .btq-why-banner { background: linear-gradient(135deg, #ede9fe, #e0f2fe); border-color: #ddd6fe; }
+.btq-why-icon { font-size: 52px; flex-shrink: 0; }
+.btq-why-title { font-size: 25px; font-weight: 700; color: #fff; margin-bottom: 10px; }
+.btq-root.light .btq-why-title { color: #1e293b; }
+.btq-why-text { font-size: 19px; color: #7b82b4; line-height: 1.7; }
+.btq-root.light .btq-why-text { color: #475569; }
+.btq-skill-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+@media (max-width: 900px) { .btq-skill-grid { grid-template-columns: 1fr; } }
+.btq-skill-card { background: #12152e; border: 1px solid #1f2448; border-radius: 20px; padding: 28px; }
+.btq-root.light .btq-skill-card { background: #ffffff; border-color: #e2e8f0; box-shadow: 0 8px 24px rgba(15, 23, 42, 0.05); }
+.btq-skill-top { display: flex; align-items: center; gap: 18px; margin-bottom: 18px; }
+.btq-skill-icon { width: 60px; height: 60px; border-radius: 14px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; border: 1px solid; }
+.btq-skill-name { font-size: 23px; font-weight: 700; color: #fff; }
+.btq-root.light .btq-skill-name { color: #1e293b; }
+.btq-skill-why { font-size: 17px; color: #7b82b4; margin-top: 6px; }
+.btq-root.light .btq-skill-why { color: #64748b; }
+.btq-skill-topics { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 18px; }
+.btq-prog-row { display: flex; align-items: center; gap: 18px; }
+.btq-prog-label { font-size: 17px; color: #c5c9ef; flex: 1; }
+.btq-root.light .btq-prog-label { color: #475569; }
+.btq-prog-bar { flex: 1; height: 12px; background: #1a1d30; border-radius: 6px; overflow: hidden; }
+.btq-root.light .btq-prog-bar { background: #e2e8f0; }
+.btq-prog-fill { height: 100%; border-radius: 6px; }
+.btq-prog-val { font-size: 17px; color: #2dd4bf; min-width: 60px; text-align: right; font-weight: 600; }
+.btq-free-box { margin-top: 28px; background: #12152e; border: 1px solid #1f2448; border-radius: 20px; padding: 28px 32px; }
+.btq-root.light .btq-free-box { background: #ffffff; border-color: #e2e8f0; }
+.btq-free-title { font-size: 25px; font-weight: 700; color: #fff; margin-bottom: 20px; }
+.btq-root.light .btq-free-title { color: #1e293b; }
+
+/* ── Exams ── */
+.btq-exam-list { display: flex; flex-direction: column; gap: 18px; }
+.btq-exam-row { background: #12152e; border: 1px solid #1f2448; border-radius: 18px; padding: 26px 30px; display: flex; align-items: flex-start; gap: 22px; }
+.btq-root.light .btq-exam-row { background: #ffffff; border-color: #e2e8f0; box-shadow: 0 8px 24px rgba(15, 23, 42, 0.05); }
+.btq-exam-badge-box { min-width: 160px; }
+.btq-exam-name-badge { font-size: 17px; font-weight: 700; padding: 8px 18px; border-radius: 11px; display: inline-block; border: 1px solid; }
+.btq-exam-title { font-size: 24px; font-weight: 600; color: #c5c9ef; margin-bottom: 8px; }
+.btq-root.light .btq-exam-title { color: #1e293b; }
+.btq-exam-desc { font-size: 18px; color: #7b82b4; line-height: 1.6; }
+.btq-root.light .btq-exam-desc { color: #475569; }
+.btq-exam-meta { display: flex; gap: 10px; margin-top: 14px; flex-wrap: wrap; }
+
+/* ── Responsive ── */
+@media (max-width: 900px) {
+  .btq-col-4, .btq-col-5 { grid-template-columns: 1fr; gap: 10px; }
+  .btq-table-header { display: none; }
+}
+@media (max-width: 700px) {
+  .btq-topbar { padding: 16px 20px; flex-wrap: wrap; gap: 14px; }
+  .btq-hero { padding: 36px 20px 30px; }
+  .btq-hero-title { font-size: 34px; }
+  .btq-hero-sub { font-size: 18px; }
+  .btq-hero-stats { gap: 26px; }
+  .btq-section { padding: 22px; }
+  .btq-path-entry { flex-direction: column; }
+  .btq-pe-right { text-align: left; }
+}

@@ -2,14 +2,21 @@ import { useState, useEffect, Suspense, lazy } from "react";
 import { ChevronDown, ChevronLeft, BookOpen, FileText, ListTree } from "lucide-react";
 import "../styles/Classeleven.css";
 import PageLoader from "../components/PageLoader";
+import AiExplain from "../components/AiExplain";
 import valencyLogo from "../assets/valency-logo.svg";
-
 const OxidationReduction = lazy(() => import("../pages/OxidationReduction.jsx"));
 const BeyondTheBond = lazy(() => import("../pages/BeyondTheBond.jsx"));
 const MoleConcept = lazy(() => import("../pages/MoleConcept.jsx"));
 const BeyondTheMole = lazy(() => import("../pages/BeyondTheMole.jsx"));
 const EmpiricalMolecularFormula = lazy(() => import("../pages/EmpiricalMolecularFormula.jsx"));
 const BeyondTheEmpirical = lazy(() => import("../pages/BeyondTheEmpirical.jsx"));
+const QuantumMechanics = lazy(() => import("../pages/QuantumMechanics.jsx"));
+const BeyondTheQuantum = lazy(() => import("../pages/BeyondTheQuantum.jsx"));
+const PeriodicClassification = lazy(() => import("../pages/PeriodicClassification.jsx"));
+const BeyondThePeriodicTable = lazy(() => import("../pages/BeyondThePeriodicTable.jsx"));
+const BEYOND_IDS = ["1.1", "1.2", "1.3", "2.1", "3.1"];
+// Subtopics that have vetted notes on the backend (backend/src/ai/lessonContext.js), so the AI can explain them.
+const AI_LESSON_IDS = { "1.1": "redox", "1.2": "mole", "3.1": "periodic" };
 const learningPath = [
   {
     id: 1,
@@ -26,6 +33,26 @@ const learningPath = [
             {
         id: "1.3",
         title: "Empirical and Molecular Formula",
+      },
+    ],
+  },
+  {
+    id: 2,
+    title: "Quantum Mechanics of an Atom",
+    subtopics: [
+      {
+        id: "2.1",
+        title: "Quantum Mechanics of an Atom",
+      },
+    ],
+  },
+  {
+    id: 3,
+    title: "Periodic Classification of Elements",
+    subtopics: [
+      {
+        id: "3.1",
+        title: "Periodic Classification of Elements",
       },
     ],
   },
@@ -123,6 +150,29 @@ export default function ClassEleven({ onBack, darkMode = true }) {
     );
   }
 
+   if (openView === "lesson" && activeSubtopic.id === "2.1") {
+    return (
+      <Suspense fallback={<PageLoader />}>
+        <QuantumMechanics
+          darkMode={darkMode}
+          onBack={() => window.history.back()}
+          onViewBeyond={openBeyond}
+        />
+      </Suspense>
+    );
+  }
+
+   if (openView === "lesson" && activeSubtopic.id === "3.1") {
+    return (
+      <Suspense fallback={<PageLoader />}>
+        <PeriodicClassification
+          darkMode={darkMode}
+          onBack={() => window.history.back()}
+        />
+      </Suspense>
+    );
+  }
+
    if (openView === "beyond" && activeSubtopic.id === "1.1") {
     return (
       <Suspense fallback={<PageLoader />}>
@@ -135,6 +185,22 @@ export default function ClassEleven({ onBack, darkMode = true }) {
     return (
       <Suspense fallback={<PageLoader />}>
         <BeyondTheMole darkMode={darkMode} onBack={() => window.history.back()} />
+      </Suspense>
+    );
+  }
+
+   if (openView === "beyond" && activeSubtopic.id === "2.1") {
+    return (
+      <Suspense fallback={<PageLoader />}>
+        <BeyondTheQuantum darkMode={darkMode} onBack={() => window.history.back()} />
+      </Suspense>
+    );
+  }
+
+   if (openView === "beyond" && activeSubtopic.id === "3.1") {
+    return (
+      <Suspense fallback={<PageLoader />}>
+        <BeyondThePeriodicTable darkMode={darkMode} onBack={() => window.history.back()} />
       </Suspense>
     );
   }
@@ -248,15 +314,21 @@ export default function ClassEleven({ onBack, darkMode = true }) {
               </div>
             </div>
 
-            <div className="ce-action-card ce-action-card--notes"
-            onClick={openBeyond}
-            >
-              <div className="ce-action-title">Beyond the Bond</div>
-              <div className="ce-action-icon-box">
-                <FileText size={40} />
+            {BEYOND_IDS.includes(activeSubtopic.id) && (
+              <div className="ce-action-card ce-action-card--notes"
+              onClick={openBeyond}
+              >
+                <div className="ce-action-title">Beyond the Bond</div>
+                <div className="ce-action-icon-box">
+                  <FileText size={40} />
+                </div>
               </div>
-            </div>
+            )}
           </div>
+
+          {AI_LESSON_IDS[activeSubtopic.id] && (
+            <AiExplain key={activeSubtopic.id} lessonId={AI_LESSON_IDS[activeSubtopic.id]} />
+          )}
         </main>
       </div>
     </div>

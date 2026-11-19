@@ -41,7 +41,6 @@ const TESTS = [
   { id: 2, title: "Gaseous State Quiz", topic: "Gaseous State", questions: 8, duration: 15, difficulty: "Easy", icon: "💨", accent: "#22d3ee", bg: "rgba(34,211,238,0.08)", xp: 220, badge: "🌬️" },
   { id: 3, title: "Organic Reactions Quiz", topic: "Basic Concepts of Organic Reactions", questions: 8, duration: 15, difficulty: "Hard", icon: "🧪", accent: "#4ade80", bg: "rgba(74,222,128,0.08)", xp: 280, badge: "🔬" },
 ];
-
 // Initial attempt/best-score state, keyed by test id
 const INITIAL_PROGRESS = {
   1: { attempts: 0, best: null },
@@ -65,7 +64,6 @@ function getCountdown() {
     isSunday: day === 0,
   };
 }
-
 function formatClock(totalSeconds) {
   const m = Math.floor(totalSeconds / 60);
   const s = totalSeconds % 60;
@@ -81,7 +79,6 @@ function Particle({ style, seed }) {
     </div>
   );
 }
-
 // ─── Countdown ring ────────────────────────────────────────────────────────
 function RingUnit({ value, label, max, color }) {
   const r = 44;
@@ -106,8 +103,7 @@ function RingUnit({ value, label, max, color }) {
     </div>
   );
 }
-
-// ─── Test card ─────────────────────────────────────────────────────────────
+// ─── Test card─────────────────────────────────────────────────────────────
 function TestCard({ test, progress, isSunday, onStart, onPractice }) {
   const [hovered, setHovered] = useState(false);
   const [tilt, setTilt] = useState({ x: 0, y: 0 });
@@ -120,7 +116,6 @@ function TestCard({ test, progress, isSunday, onStart, onPractice }) {
     const y = -((e.clientX - rect.left) / rect.width - 0.5) * 12;
     setTilt({ x, y });
   };
-
   const diffColor = test.difficulty === "Easy" ? "#34d399" : test.difficulty === "Medium" ? "#fbbf24" : "#f87171";
   const diffStars = test.difficulty === "Easy" ? 1 : test.difficulty === "Medium" ? 2 : 3;
   const locked = !isSunday;
@@ -161,7 +156,6 @@ function TestCard({ test, progress, isSunday, onStart, onPractice }) {
             </div>
           </div>
         </div>
-
         <div className="wt-card-title-wrap">
           <span className="wt-card-title" style={{ color: hovered ? test.accent : "var(--wt-text)" }}>{test.title}</span>
           {progress.attempts > 0 && <span className="wt-card-attempts-note">✓ {progress.attempts}× · best {progress.best}%</span>}
@@ -213,7 +207,6 @@ function ConfirmModal({ test, practice, onClose, onConfirm }) {
       return () => clearTimeout(t);
     }
   }, [step]);
-
   const qCount = QUESTION_BANKS[test.id].length;
 
   return (
@@ -276,7 +269,6 @@ function QuizView({ test, practice, onExit, onFinish, darkMode = true }) {
   const [secondsLeft, setSecondsLeft] = useState(test.duration * 60);
   const [confirmExit, setConfirmExit] = useState(false);
   const submittedRef = useRef(false);
-
   const handleSubmit = () => {
     if (submittedRef.current) return;
     submittedRef.current = true;
@@ -323,7 +315,7 @@ function QuizView({ test, practice, onExit, onFinish, darkMode = true }) {
           <div className="wt-quiz-progress-fill" style={{ width: `${((qIndex + 1) / questions.length) * 100}%`, background: `linear-gradient(90deg, ${test.accent}aa, ${test.accent})` }} />
         </div>
       </div>
-
+      {/* The Prev and Next buttons use the functional form of the setter, setQIndex(i i + 1), clamped with Math.max and Math.min so it can never go out of range. Prev is disabled at index 0 */}
       <div className="wt-quiz-body">
         <div className="wt-quiz-dots">
           {questions.map((_, i) => {

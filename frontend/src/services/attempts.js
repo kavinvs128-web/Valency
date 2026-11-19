@@ -32,6 +32,21 @@ export async function getAttempts() {
   return data.attempts || [];
 }
 
+export async function getAttemptStats() {
+  const res = await fetch(`${API}/stats`, {
+    headers: {
+      ...authHeaders(),
+    },
+  });
+
+  if (!res.ok) {
+    throw new Error("Failed to load stats");
+  }
+
+  const data = await res.json();
+  return data.stats;
+}
+
 export async function addAttempt(record) {
   const res = await fetch(API, {
     method: "POST",

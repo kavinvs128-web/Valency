@@ -103,9 +103,36 @@ async function deleteAttempt(req, res, next) {
   }
 }
 
+async function getStats(req, res, next) {
+  try {
+    // The two queries do not depend on each other, so start both at once and wait for both
+    // with Promise.all. Awaiting them one after the other would take the sum of the two times.
+    const [totalAttempts, summary] = await Promise.all([
+      Attempt.countDocuments({ user: req.user._id }),
+      Attempt.aggregate([
+        { $match: { user: req.user._id } },
+        { $group: { _id: null, averageScorePct: { $avg: '$scorePct' }, bestScorePct: { $max: '$scorePct' } } },
+      ]),
+    ]);
+
+    const { averageScorePct = 0, bestScorePct = 0 } = summary[0] || {};
+
+    return res.json({
+      stats: {
+        totalAttempts,
+        averageScorePct: Math.round(averageScorePct),
+        bestScorePct,
+      },
+    });
+  } catch (err) {
+    return next(err);
+  }
+}
+
 module.exports = {
   createAttempt,
   listAttempts,
   updateAttempt,
   deleteAttempt,
+  getStats,
 };
