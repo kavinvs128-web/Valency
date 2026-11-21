@@ -68,6 +68,14 @@ const RESPONSE_SCHEMA = {
   propertyOrdering: ["title", "simpleExplanation", "analogy", "keyPoints", "workedExample", "commonMistake", "checkQuestion"],
 };
 
+// HOISTING: buildUserMessage is called on the next line but is written further down this file
+// (near the bottom). That works because it is a function DECLARATION: JavaScript hoists the whole
+// function, name and body, to the top of the scope before any code runs.
+//   - If it were `const buildUserMessage = (...) => {...}` written below this line, this call would
+//     throw a ReferenceError, because let/const are hoisted but stay in the temporal dead zone
+//     until their line has run.
+//   - If it were `var buildUserMessage = function(...) {...}`, the name would be hoisted but be
+//     undefined here, so the call would throw a TypeError ("not a function").
 // Few-shot example: a different topic from the real lessons, so the model learns the FORMAT.
 const EXAMPLE_REQUEST = buildUserMessage({
   title: "Atomic Number",

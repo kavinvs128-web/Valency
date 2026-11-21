@@ -25,8 +25,6 @@ export default function ReactionLog({ onBack, onTakeQuiz, darkMode = true }) {
   const [deleteError, setDeleteError] = useState(false);
   useEffect(() => {
     let cancelled = false;
-    // Start both requests at the same time. allSettled waits for both and never rejects, so I
-    // can treat them differently: the attempts list is required, the stats summary is optional.
     Promise.allSettled([getAttempts(), getAttemptStats()])
       .then(([attemptsResult, statsResult]) => {
         if (cancelled) return;
